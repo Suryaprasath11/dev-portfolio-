@@ -15,3 +15,29 @@ const revealObserver = new IntersectionObserver(
 );
 
 revealEls.forEach((el) => revealObserver.observe(el));
+
+const navbar = document.querySelector(".navbar");
+const navToggle = document.querySelector(".nav-toggle");
+const navTargets = document.querySelectorAll(".nav-links a, .cv-btn");
+
+if (navbar && navToggle) {
+  const closeNav = () => {
+    navbar.classList.remove("nav-open");
+    navToggle.setAttribute("aria-expanded", "false");
+  };
+
+  navToggle.addEventListener("click", () => {
+    const open = navbar.classList.toggle("nav-open");
+    navToggle.setAttribute("aria-expanded", String(open));
+  });
+
+  navTargets.forEach((target) => {
+    target.addEventListener("click", () => {
+      if (window.innerWidth <= 900) closeNav();
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 900) closeNav();
+  });
+}
